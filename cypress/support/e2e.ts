@@ -14,13 +14,17 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import 'cypress-mochawesome-reporter/register';
 import homePage from "../pages/homePage";
 import storePage from "../pages/storePage";
 import { dataSynth } from "../utility";
 import "./commands";
+import TranslationProvider from '../translations/translationProvider';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+let { homePageTexts, storePageTexts } = TranslationProvider.translation;
 
 before(() => {
 	cy.interceptApi("loadPageRequests", 8);
@@ -31,10 +35,18 @@ before(() => {
 		$element.click();
 	});
 
-	homePage.collectFromStoreButton.should("be.visible").click();
-	homePage.searchForLocation("Wakad");
-	storePage.orderButton.should("have.text", "Order");
+	homePage.collectFromStoreButton
+		.should("be.visible")
+		.should("have.text", homePageTexts.collectFromStore)
+		.click();
+	homePage.locationInput
+		.should("have.attr", "placeholder", homePageTexts.enterYourCollectionLocation);
+	cy.fixture("storeDetails").then(storeDetails => {
+		homePage.searchForLocation(storeDetails.location);
+	})
 	cy.interceptApi("loadStoresRequest", 5);
-	storePage.orderButton.click()
+	storePage.orderButton
+		.should("have.text", storePageTexts.order)
+		.click()
 	cy.waitForApi("@loadStoresRequest", 5);
 });
