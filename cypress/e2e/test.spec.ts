@@ -15,16 +15,22 @@ describe("Testing pizza hut application", () => {
 			.click();
 	});
 
+	// This test case selects the first available pizza from the pizza menu
 	it("Should select and verify item", () => {
 		orderPizzaPage.pizzaCards.eq(0)
 			.within(() => {
+				// This step exacts the pizza name from the first available pizza card and stored it as alias
 				orderPizzaPage.pizzaNameInCard
 					.then($element => {
 						cy.wrap($element.contents()[0].textContent).as("pizzaName")
 					});
+
+				// This step exacts the pizza price from the first available pizza card and stored it as alias
 				orderPizzaPage.pizzaPriceInCard
 					.invoke("text")
 					.as("pizzaPrice");
+
+				// This step basically adds the selected pizza to cart
 				orderPizzaPage.pizzaAddButtonInCard
 					.should("contain.text", orderPizzaPageTexts.add)
 					.click();
