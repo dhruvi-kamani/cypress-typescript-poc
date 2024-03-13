@@ -19,12 +19,12 @@ import homePage from "../pages/homePage";
 import storePage from "../pages/storePage";
 import { dataSynth } from "../utility";
 import "./commands";
-import TranslationProvider from '../translations/translationProvider';
+import translation from '../translations/translation';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-let { homePageTexts, storePageTexts } = TranslationProvider.translation;
+let { homePageTexts, storePageTexts } = translation;
 
 before(() => {
 	cy.interceptApi("loadPageRequests", 8);

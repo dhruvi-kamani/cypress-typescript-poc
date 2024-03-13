@@ -1,6 +1,6 @@
 import ITranslation from "./ITranslation";
 
-const EnglishTranslation: ITranslation = {
+const englishTranslation: ITranslation = {
     homePageTexts: {
         collectFromStore: "Collect From Store",
         enterYourCollectionLocation: "Enter your collection location"
@@ -21,4 +21,4 @@ const EnglishTranslation: ITranslation = {
     }
 };
 
-export default EnglishTranslation;
+export default englishTranslation;

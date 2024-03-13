@@ -3,11 +3,11 @@ import modifyOrderModel from "../models/modifyOrderModel";
 import orderNavigationPage from "../pages/orderNavigationPage";
 import orderPastaPage from "../pages/orderPastaPage";
 import orderPizzaPage from "../pages/orderPizzaPage";
-import TranslationProvider from "../translations/translationProvider";
+import translation from "../translations/translation";
 
 describe("Testing pizza hut application", () => {
 
-	let { orderPizzaMenuTexts, orderPizzaPageTexts, modifyOrderModelTexts } = TranslationProvider.translation;
+	let { orderPizzaMenuTexts, orderPizzaPageTexts, modifyOrderModelTexts } = translation;
 
 	before(() => {
 		orderNavigationPage.pizzaMenuButton
