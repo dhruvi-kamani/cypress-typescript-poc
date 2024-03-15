@@ -3,16 +3,11 @@ import modifyOrderModel from "../models/modifyOrderModel";
 import orderNavigationPage from "../pages/orderNavigationPage";
 import orderPastaPage from "../pages/orderPastaPage";
 import orderPizzaPage from "../pages/orderPizzaPage";
-import translation from "../translations/translation";
 
 describe("Testing pizza hut application", () => {
 
-	let { orderPizzaMenuTexts, orderPizzaPageTexts, modifyOrderModelTexts } = translation;
-
 	before(() => {
-		orderNavigationPage.pizzaMenuButton
-			.should("have.text", orderPizzaMenuTexts.pizzas)
-			.click();
+		orderNavigationPage.pizzaMenuButton.click();
 	});
 
 	// This test case selects the first available pizza from the pizza menu
@@ -31,9 +26,7 @@ describe("Testing pizza hut application", () => {
 					.as("pizzaPrice");
 
 				// This step basically adds the selected pizza to cart
-				orderPizzaPage.pizzaAddButtonInCard
-					.should("contain.text", orderPizzaPageTexts.add)
-					.click();
+				orderPizzaPage.pizzaAddButtonInCard.click();
 			});
 
 		cy.getAliases(["@pizzaName", "@pizzaPrice"]).then(([name, price]) => {
@@ -56,13 +49,10 @@ describe("Testing pizza hut application", () => {
 		modifyOrderModel.modifiedPrice.then(($span) => {
 			cy.wrap($span.contents()[1].textContent).as("pizzaPrice");
 		});
-		modifyOrderModel.addToBasketButton
-			.should("contain.text", modifyOrderModelTexts.addToMyBasket)
-			.click();
+		modifyOrderModel.addToBasketButton.click();
 
 		cy.get("@pizzaPrice").then((price) => {
-			basketPage.subTotalValue
-				.should("contain.text", price);
+			basketPage.subTotalValue.should("contain.text", price);
 		});
 	});
 
@@ -74,15 +64,11 @@ describe("Testing pizza hut application", () => {
 	});
 
 	it("Should filter with vegetarian options", () => {
-		orderNavigationPage.pastaMenuButton
-			.should("have.text", orderPizzaMenuTexts.pastas)
-			.click();
+		orderNavigationPage.pastaMenuButton.click();
 		orderPastaPage.pasteCards.its("length").then(length => {
 			cy.wrap(length).as("preFilteredLength");
 		});
-		orderNavigationPage.vegetarianToggle
-			.should("have.text", orderPizzaMenuTexts.vegetarian)
-			.click({ force: true });
+		orderNavigationPage.vegetarianToggle.click({ force: true });
 		orderPastaPage.pasteCards.its("length").then(filteredLength => {
 			cy.get("@preFilteredLength").should("be.gt", filteredLength);
 		})

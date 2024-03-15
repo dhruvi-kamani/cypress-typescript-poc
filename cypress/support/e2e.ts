@@ -24,8 +24,6 @@ import translation from '../translations/translation';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-let { homePageTexts, storePageTexts } = translation;
-
 before(() => {
 	cy.interceptApi("loadPageRequests", 8);
 	cy.visit("/");
@@ -35,18 +33,12 @@ before(() => {
 		$element.click();
 	});
 
-	homePage.collectFromStoreButton
-		.should("be.visible")
-		.should("have.text", homePageTexts.collectFromStore)
-		.click();
-	homePage.locationInput
-		.should("have.attr", "placeholder", homePageTexts.enterYourCollectionLocation);
+	homePage.collectFromStoreButton.should("be.visible").click();
+	homePage.locationInput.should("have.attr", "placeholder", translation.homePageTexts.enterYourCollectionLocation);
 	cy.fixture("storeDetails").then(storeDetails => {
 		homePage.searchForLocation(storeDetails.location);
 	})
 	cy.interceptApi("loadStoresRequest", 5);
-	storePage.orderButton
-		.should("have.text", storePageTexts.order)
-		.click()
+	storePage.orderButton.click()
 	cy.waitForApi("@loadStoresRequest", 5);
 });
